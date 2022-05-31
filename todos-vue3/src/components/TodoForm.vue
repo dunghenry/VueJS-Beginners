@@ -1,9 +1,14 @@
 <template>
   <div>
-      <form @submit="handleSubmit">
+      <form @submit.prevent="handleSubmit">
           <div>
               <label>Title : </label>
-              <input v-model="title" type="text"/>
+              <input ref="inputRef" v-model="title" type="text"/>
+          </div>
+          <br/>
+          <div>
+              <label>Des : </label>
+              <input v-model="description" type="text"/>
           </div>
           <br>
           <div>
@@ -19,26 +24,33 @@ export default {
     name: "TodoForm",
     setup(props, context){
         const title = ref('');
-        const handleSubmit = (e) =>{
-            e.preventDefault();
+        const description = ref('');
+        const inputRef =  ref(null);
+        const handleSubmit = () =>{
             const newTodo = {
-                id: Math.floor(Math.random() * 10000),
                 title: title.value,
+                description: description.value,
                 completed: false
             }
             if(title.value){
                 context.emit('add-todo', newTodo);
             }
-            title.value = ''
+            title.value = '';
+            description.value = '';
+            inputRef.value.focus();
         }
         return{
             title,
+            description,
+            inputRef,
             handleSubmit
         }
     }
 }
 </script>
 
-<style>
-
+<style scoped>
+button{
+    cursor: pointer;
+}
 </style>

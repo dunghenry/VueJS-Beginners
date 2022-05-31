@@ -1,8 +1,10 @@
 <template>
     <div>
         <div :class="['item', todo.completed && 'is-completed']"> 
-            <input @change="handleChecked" :checked="todo.completed" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;
-            {{ todo.title }}&nbsp;&nbsp;&nbsp;&nbsp;
+            <input @change="handleChecked" :checked="todo.completed" type="checkbox">
+            <span>
+                <span class="title">{{ todo.title }}</span>
+            </span>
             <button @click="handleDelete">Delete</button>
         </div>
     </div>
@@ -14,19 +16,16 @@ export default {
     name: 'TodoItem',
     setup(props, context) {
         const handleChecked = () =>{
-            context.emit('handle-completed', props.todo.id)
+            context.emit('handle-completed', props.todo._id)
         }
         const handleDelete = () =>{
-            context.emit('handle-delete', props.todo.id)
+            context.emit('handle-delete', props.todo._id)
         }
         return{
             handleChecked,
             handleDelete
         }
     },
-    methods: {
-        
-    }
 }
 </script>
 
@@ -42,6 +41,7 @@ p {
 button {
     cursor: pointer;
     border-radius: 4px;
+    float: right;
 }
 
 input[type="checkbox"] {
@@ -56,9 +56,13 @@ input[type="checkbox"] {
     transform: scale(1.5);
     padding: 10px;
     cursor: pointer;
+    float: left;
 }
 
 .is-completed{
     text-decoration: line-through;
+}
+span.title {
+    font-weight: bold;
 }
 </style>
