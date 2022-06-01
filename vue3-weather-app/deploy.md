@@ -1,0 +1,1 @@
+deploy:https://vue3-weather-app-basic.netlify.app
